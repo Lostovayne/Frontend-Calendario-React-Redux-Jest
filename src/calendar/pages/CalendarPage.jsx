@@ -1,28 +1,14 @@
 /* eslint-disable no-unused-vars */
-import { addHours } from "date-fns";
+import { useState } from "react";
 import { Calendar } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { CalendarEvent, CalendarModal, Navbar } from "../";
-import { localizer, getMessages } from "../../helpers";
-import { useState } from "react";
-import { useUiStore } from "../../hooks/useUiStore";
-
-const myEventsList = [
-    {
-        title: "Lanzarme de un Puente",
-        notes: "Transmitido en Twitch, no faltes!",
-        start: new Date(),
-        end: addHours(new Date(), 2, 1),
-        bgColor: "#fafafa",
-        user: {
-            _id: "123",
-            name: "Epsaind",
-        },
-    },
-];
+import { getMessages, localizer } from "../../helpers";
+import { useCalendarStore, useUiStore } from "../../hooks";
 
 export const CalendarPage = () => {
     const [lastView, setLastView] = useState(localStorage.getItem("lastView") || "week");
+    const { events, setActiveEvent } = useCalendarStore();
     const { openDateModal } = useUiStore();
 
     const eventStyleGetter = (event, start, end, isSelected) => {
@@ -44,7 +30,8 @@ export const CalendarPage = () => {
     };
 
     const onSelect = (event) => {
-        console.log({ onSelect: event });
+        // console.log({ onSelect: event });
+        setActiveEvent(event);
     };
 
     const onViewChanged = (event) => {
@@ -58,7 +45,7 @@ export const CalendarPage = () => {
             <Calendar
                 culture="es"
                 localizer={localizer}
-                events={myEventsList}
+                events={events}
                 defaultView={lastView}
                 startAccessor="start"
                 endAccessor="end"

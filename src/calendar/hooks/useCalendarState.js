@@ -3,11 +3,13 @@ import { useMemo } from "react";
 import { useState } from "react";
 import { Swal } from "sweetalert2";
 import { useUiStore } from "./../../hooks/useUiStore";
+import { useEffect } from "react";
+import { useCalendarStore } from "../../hooks";
 
 export const useCalendarState = () => {
     const { isDateModalOpen, closeDateModal } = useUiStore();
-
     const [formSubmitted, setFormSubmitted] = useState(false);
+    const { activeEvent } = useCalendarStore();
 
     const [formValues, setformValues] = useState({
         title: "Epsaind",
@@ -27,6 +29,12 @@ export const useCalendarState = () => {
             [target.name]: target.value,
         });
     };
+
+    useEffect(() => {
+        if (activeEvent !== null) {
+            setformValues(activeEvent);
+        }
+    }, [activeEvent]);
 
     const onDateChanged = (event, changing) => {
         setformValues({

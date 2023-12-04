@@ -1,15 +1,30 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { addHours } from "date-fns";
+
+const temEvent = {
+    _id: new Date().getTime(),
+    title: "Ver mr robot",
+    notes: "Transmitido en Twitch, no faltes!",
+    start: new Date(),
+    end: addHours(new Date(), 2),
+    bgColor: "#fafafa",
+    user: {
+        _id: "123",
+        name: "Epsaind",
+    },
+};
 
 export const calendarSlice = createSlice({
     name: "calendar",
     initialState: {
-        counter: 10,
+        events: [temEvent],
+        activeEvent: null,
     },
     reducers: {
-        increment: (state /* action */) => {
-            state.counter += 1;
+        onSetActiveEvent: (state, { payload }) => {
+            state.activeEvent = payload;
         },
     },
 });
 
-export const { increment } = calendarSlice.actions;
+export const { onSetActiveEvent } = calendarSlice.actions;
