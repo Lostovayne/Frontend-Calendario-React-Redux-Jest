@@ -12,8 +12,8 @@ export const useCalendarState = () => {
     const { activeEvent } = useCalendarStore();
 
     const [formValues, setformValues] = useState({
-        title: "Epsaind",
-        notes: "Dev",
+        title: "",
+        notes: "",
         start: new Date(),
         end: addHours(new Date(), 2),
     });
@@ -32,7 +32,7 @@ export const useCalendarState = () => {
 
     useEffect(() => {
         if (activeEvent !== null) {
-            setformValues(activeEvent);
+            setformValues({ ...activeEvent });
         }
     }, [activeEvent]);
 
