@@ -1,15 +1,13 @@
 import { addHours, differenceInSeconds } from "date-fns";
-import { useMemo } from "react";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Swal } from "sweetalert2";
-import { useUiStore } from "./../../hooks/useUiStore";
-import { useEffect } from "react";
 import { useCalendarStore } from "../../hooks";
+import { useUiStore } from "./../../hooks/useUiStore";
 
 export const useCalendarState = () => {
     const { isDateModalOpen, closeDateModal } = useUiStore();
     const [formSubmitted, setFormSubmitted] = useState(false);
-    const { activeEvent } = useCalendarStore();
+    const { activeEvent, startSavingEvent } = useCalendarStore();
 
     const [formValues, setformValues] = useState({
         title: "",
@@ -47,7 +45,7 @@ export const useCalendarState = () => {
         closeDateModal();
     };
 
-    const onSubmit = (event) => {
+    const onSubmit = async (event) => {
         event.preventDefault();
         setFormSubmitted(true);
         const diference = differenceInSeconds(formValues.end, formValues.start);
@@ -65,9 +63,9 @@ export const useCalendarState = () => {
 
         if (formValues.title.length <= 0) return;
 
-        console.log(formValues);
-        //Todo : Cerrar el modal
+        //Todo : Enviando
 
+        await startSavingEvent(formValues);
         onCloseModal();
     };
 

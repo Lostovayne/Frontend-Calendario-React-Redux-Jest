@@ -1,5 +1,5 @@
 /* Modal */
-.ReactModalPortal > div{
+.ReactModalPortal > div {
     opacity: 0;
 }
 
@@ -7,7 +7,7 @@
     align-items: center;
     display: flex;
     justify-content: center;
-    transition: opacity .2s ease-in-out;
+    transition: opacity 0.2s ease-in-out;
     z-index: 999;
 }
 
@@ -37,4 +37,15 @@
     max-width: 500px;
     outline: none;
     padding: 10px;
+}
+
+/* Fabs */
+
+.fab {
+    border-radius: 100%;
+    bottom: 25px;
+    font-size: 30px;
+    padding: 25px;
+    position: fixed;
+    right: 25px;
 }
