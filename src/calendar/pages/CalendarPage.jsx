@@ -5,10 +5,11 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 import { CalendarEvent, CalendarModal, FabAddNew, FabDelete, Navbar } from "../";
 import { getMessages, localizer } from "../../helpers";
 import { useCalendarStore, useUiStore } from "../../hooks";
+import { useEffect } from "react";
 
 export const CalendarPage = () => {
     const [lastView, setLastView] = useState(localStorage.getItem("lastView") || "week");
-    const { events, setActiveEvent, hasEventSelected } = useCalendarStore();
+    const { events, setActiveEvent, hasEventSelected, startLoadingEvents } = useCalendarStore();
     const { openDateModal } = useUiStore();
 
     const eventStyleGetter = (event, start, end, isSelected) => {
@@ -38,6 +39,10 @@ export const CalendarPage = () => {
         localStorage.setItem("lastView", event);
         setLastView(event);
     };
+
+    useEffect(() => {
+        startLoadingEvents();
+    }, []);
 
     return (
         <>
